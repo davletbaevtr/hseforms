@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+</head>
+
+<body>
+<div class="header">
+    <div class="headerLeft">
+        <div class="headerLink notSelectable">
+            <a class="headerLogo link" href="/">
+                HSE FORMS
+            </a>
+        </div>
+    </div>
+    <div class="headerRight">
+        <div class="headerLink {% block header_main_link %}{% endblock %}">
+            <a class="headerText {% block header_main_text %}{% endblock %}" href="/">
+                Главная
+            </a>
+        </div>
+        <div class="headerLink {% block header_myforms_link %}{% endblock %}">
+            <a class="headerText headerMyForms {% block header_myforms_text %}{% endblock %}" href="/myforms">
+                Мои формы
+            </a>
+        </div>
+        <div class="headerLink">
+            <a class="headerCreate" href="/create">
+                Создать опрос
+            </a>
+        </div>
+    </div>
+</div>
+
+<main>
+    {% block section %} {% endblock %}
+</main>
+<footer>
+    <a class="contacts" href="/contacts">
+        Контакты
+    </a>
+</footer>
+</body>
+</html>
