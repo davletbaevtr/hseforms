@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+    Вход
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block section %}
+    <div class="AuthButtons">
+        <div class="Button">
+            <a class="ButtonText SelectButton AuthRegButtonText">
+                Вход
+            </a>
+        </div>
+        <div class="Button">
+            <a class="ButtonText AuthRegButtonText">
+                Регистрация
+            </a>
+        </div>
+    </div>
+    <form class="" method="post">
+        {% csrf_token %}
+        <div class="FormField">
+            <input class="Input" type="text" name="username" id="username" placeholder="  Введите логин">
+        </div>
+        <div class="FormField">
+            <input class="Input" type="password" name="password" id="pwd" placeholder="  Введите пароль">
+        </div>
+        <button class="Button">
+            <a class="ButtonText SelectButton LoginButton">
+                Войти в аккаунт
+            </a>
+        </button>
+        {{ form.errors }}
+    </form>
+{% endblock %}

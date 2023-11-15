@@ -110,7 +110,6 @@ footer {
     text-align: center;
     font-size: 50px;
     padding-top: 100px;
-    font-weight: bold;
     white-space: nowrap;
     padding-bottom: 100px;
 }
@@ -122,25 +121,33 @@ main {
     flex: 1;
 }
 
-.createButton {
+.ButtonText {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     border-radius: 3px;
-    background-color: #0d40ff;
+    background-color: #909090;
     color: white;
-    min-width: 700px;
-    width: 800px;
     font-weight: bold;
     text-decoration: none;
-    padding: 10px 0 15px 0;
     font-size: 50px;
+    padding: 10px 0 15px 0;
 }
 
-.create {
+.SelectButton {
+    background-color: #0d40ff;
+}
+
+.createButton {
+    min-width: 700px;
+    width: 800px;
+}
+
+.Button {
     display: flex;
     justify-content: center;
+    padding: 0;
+    border: none;
 }
 
 .contacts {

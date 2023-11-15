@@ -1,0 +1,41 @@
+form {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.LoginButton {
+    width: 900px;
+    min-width: 800px;
+}
+
+.FormField {
+    display: flex;
+    width: 900px;
+    min-width: 800px;
+    flex-direction: column;
+    padding-bottom: 50px;
+}
+
+.Input {
+    height: 80px;
+    font-size: 50px;
+    font-weight: normal;
+    text-decoration: none;
+    border-radius: 2px;
+    border-color: black;
+    border-image: none;
+}
+
+.AuthButtons {
+    display: flex;
+    justify-content: space-between;
+    width: 900px;
+    align-self: center;
+    padding: 100px 0 63px 0;
+}
+
+.AuthRegButtonText {
+    width: 430px;
+}

@@ -1,17 +1,17 @@
-{% extends 'main/layout.html' %}
+{% extends 'layout.html' %}
 
 {% block title %}Главная страница{% endblock %}
 
 {% block header_main_link %}selectHeader{% endblock %}
 {% block header_main_text %}selectHeaderText{% endblock %}
-<!-- Которая отправляет на /create и там проверяет авторизован или нет если нет то на /auth -->
+
 {% block section %}
     <div class="MainInfo">
         Привет! Команда HSE FORMS приветствует<br>тебя на нашем сайте.<br>
         HSE FORMS - это новый подход к созданию<br>онлайн-форм: более простой, быстрый и удобный
     </div>
-    <div class="create">
-        <a class="createButton" href="/create">
+    <div class="Button">
+        <a class="ButtonText SelectButton createButton" href="/create">
             Создать первый опрос
         </a>
     </div>

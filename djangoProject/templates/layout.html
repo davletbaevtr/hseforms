@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        {% block title %} {% endblock %}
+        {% block title %}{% endblock %}
     </title>
-    <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -38,7 +39,7 @@
 </div>
 
 <main>
-    {% block section %} {% endblock %}
+    {% block section %}{% endblock %}
 </main>
 <footer>
     <a class="contacts" href="/contacts">
