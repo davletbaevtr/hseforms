@@ -14,15 +14,18 @@ from pathlib import Path
 
 from django.urls import reverse_lazy
 
+from decouple import config
+
+config = config()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%x=#3r=$k!&8-(!%4u=r&^$ip&w1_h3eds9*o42(ny0$(v$kk#'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
