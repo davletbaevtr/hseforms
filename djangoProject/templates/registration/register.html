@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    Вход
+    Регистрация
 {% endblock %}
 
 {% block head %}
@@ -12,12 +12,12 @@
 {% block section %}
     <div class="AuthButtons">
         <div class="Button">
-            <a class="ButtonText SelectButton AuthRegButtonText">
+            <a class="ButtonText AuthRegButtonText " href="accounts/login">
                 Вход
             </a>
         </div>
         <div class="Button">
-            <a class="ButtonText AuthRegButtonText" href="{% url 'register' %}">
+            <a class="ButtonText SelectButton AuthRegButtonText">
                 Регистрация
             </a>
         </div>
@@ -28,11 +28,14 @@
             <input class="Input" type="text" name="username" placeholder="  Введите логин">
         </div>
         <div class="FormField">
-            <input class="Input" type="password" name="password" placeholder="  Введите пароль">
+            <input class="Input" type="password" name="password1" placeholder="  Введите пароль">
+        </div>
+        <div class="FormField">
+            <input class="Input" type="password" name="password2" placeholder="  Подтвердите пароль">
         </div>
         <button class="Button">
             <a class="ButtonText SelectButton LoginButton">
-                Войти в аккаунт
+                Зарегистрироваться
             </a>
         </button>
         {{ form.errors }}
