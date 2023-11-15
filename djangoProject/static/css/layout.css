@@ -157,3 +157,17 @@ main {
     color: #909090;
     padding-bottom: 20px;
 }
+
+.headerLog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    background-color: #0d40ff;
+    color: white;
+    margin: 20px 0 0 0;
+    padding: 10px 5px 15px 5px;
+    font-weight: bold;
+    text-decoration: none;
+}

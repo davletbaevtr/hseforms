@@ -35,6 +35,13 @@
                 Создать опрос
             </a>
         </div>
+        <div class="headerLink">
+            {% if user.is_authenticated %}
+                <a class="headerLog" href="{% url 'logout' %}">Выход</a>
+            {% else %}
+                <a class="headerLog" href="{% url 'login' %}">Вход</a>
+            {% endif %}
+        </div>
     </div>
 </div>
 
