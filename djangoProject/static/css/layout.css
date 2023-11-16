@@ -16,10 +16,13 @@ body, html {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    height: 110px;
+    height: 60px;
     align-self: stretch;
     width: 100%;
-    font-size: 45px;
+    font-size: 16px;
+    border-bottom: 5px;
+    border-color: black;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
 }
 
 .notSelectable {
@@ -29,38 +32,27 @@ body, html {
 }
 
 .headerText {
-    color: #909090;
-    padding-bottom: 15px;
-    font-weight: bold;
+    white-space: nowrap;
+    color: black;
+    padding-bottom: 20px;
+    font-weight: 500;
     text-decoration: none;
     text-align: right;
 }
 
-.headerMyForms {
-    min-width: 275px;
-}
-
-.selectHeader {
-    border-bottom: 10px solid #0d40ff;
-}
-
-.selectHeaderText {
-    padding-bottom: 10px;
-    color: black;
-}
-
 .headerLogo {
+    white-space: nowrap;
     text-decoration: none;
     font-weight: bold;
-    font-size: 98px;
+    font-size: 30px;
     color: #0d40ff;
     padding-bottom: 0;
-    padding-left: 12px;
-    line-height: 90px;
+    padding-left: 30px;
+    line-height: 65px;
 }
 
 .headerLink {
-    margin: 0 20px 0 20px;
+    margin: 0 20px 0 0;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
@@ -71,7 +63,6 @@ body, html {
     display: flex;
     justify-content: flex-start;
     height: 100%;
-    min-width: 600px;
 }
 
 .headerRight {
@@ -82,19 +73,19 @@ body, html {
     height: 100%;
 }
 
-.headerCreate {
+.headerButton {
+    white-space: nowrap;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     border-radius: 3px;
     background-color: #0d40ff;
     color: white;
-    margin: 20px 0 0 15px;
-    padding: 10px 0 15px 0;
-    min-width: 500px;
-    font-weight: bold;
+    padding: 4px 14px 8px 14px;
+    font-weight: 500;
     text-decoration: none;
+    margin-bottom: 12px;
 }
 
 footer {
@@ -103,15 +94,18 @@ footer {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    margin-top: 80px;
+    margin-top: 60px;
+    padding-top: 20px;
+    background: #f8f9fa;
 }
 
 .MainInfo {
     text-align: center;
-    font-size: 50px;
-    padding-top: 100px;
+    font-size: 34px;
+    padding-top: 40px;
     white-space: nowrap;
     padding-bottom: 100px;
+    font-weight: 500;
 }
 
 main {
@@ -122,25 +116,21 @@ main {
 }
 
 .ButtonText {
+    white-space: nowrap;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 3px;
     background-color: #909090;
     color: white;
-    font-weight: bold;
+    font-weight: 500;
     text-decoration: none;
-    font-size: 50px;
-    padding: 10px 0 15px 0;
+    font-size: 34px;
+    padding: 10px 60px 15px 60px;
 }
 
 .SelectButton {
     background-color: #0d40ff;
-}
-
-.createButton {
-    min-width: 700px;
-    width: 800px;
 }
 
 .Button {
@@ -148,26 +138,35 @@ main {
     justify-content: center;
     padding: 0;
     border: none;
+    background: white;
 }
 
 .contacts {
+    white-space: nowrap;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 50px;
-    color: #909090;
+    font-weight: 500;
+    font-size: 20px;
+    color: black;
     padding-bottom: 20px;
 }
 
-.headerLog {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    background-color: #0d40ff;
-    color: white;
-    margin: 20px 0 0 0;
-    padding: 10px 5px 15px 5px;
-    font-weight: bold;
-    text-decoration: none;
+.selectHeaderText {
+    border-bottom: 5px solid #0d40ff;
+    padding-bottom: 15px;
+}
+
+.loginIcon {
+    padding-right: 7px;
+}
+
+.withIcon {
+    padding-left: 10px;
+}
+
+.MainInfoBig {
+    text-align: center;
+    font-size: 60px;
+    padding-top: 150px;
+    white-space: nowrap;
+    font-weight: 500;
 }

@@ -6,16 +6,15 @@ form {
 }
 
 .LoginButton {
-    width: 900px;
-    min-width: 800px;
+    width: 100%;
 }
 
 .FormField {
     display: flex;
-    width: 900px;
-    min-width: 800px;
-    flex-direction: column;
+    width: 800px;
+    flex-direction: row;
     padding-bottom: 50px;
+    justify-content: center;
 }
 
 .Input {
@@ -26,16 +25,17 @@ form {
     border-radius: 2px;
     border-color: black;
     border-image: none;
+    width: 100%;
 }
 
 .AuthButtons {
     display: flex;
-    justify-content: space-between;
-    width: 900px;
+    justify-content: center;
+    width: 100%;
     align-self: center;
     padding: 100px 0 63px 0;
 }
 
 .AuthRegButtonText {
-    width: 430px;
+    width: 280px;
 }

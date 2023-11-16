@@ -2,13 +2,14 @@
 
 {% block title %}Главная страница{% endblock %}
 
-{% block header_main_link %}selectHeader{% endblock %}
 {% block header_main_text %}selectHeaderText{% endblock %}
 
 {% block section %}
+    <div class="MainInfoBig">
+        Добро пожаловать на HSE Forms!
+    </div>
     <div class="MainInfo">
-        Привет! Команда HSE FORMS приветствует<br>тебя на нашем сайте.<br>
-        HSE FORMS - это новый подход к созданию<br>онлайн-форм: более простой, быстрый и удобный
+        HSE Forms - это новый подход к созданию<br>онлайн-форм: быстро, просто и удобно!
     </div>
     <div class="Button">
         {% if user.is_authenticated %}
