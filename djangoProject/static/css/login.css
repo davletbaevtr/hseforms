@@ -39,3 +39,7 @@ form {
 .AuthRegButtonText {
     width: 280px;
 }
+
+.formErrors {
+    max-width: 800px;
+}
