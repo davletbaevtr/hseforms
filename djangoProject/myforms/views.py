@@ -15,6 +15,7 @@ def create(request):
     return redirect('edit_survey', unique_id=survey.unique_id)
 
 
+@login_required
 def edit(request, unique_id):
     survey = get_object_or_404(Survey, unique_id=unique_id)
 
