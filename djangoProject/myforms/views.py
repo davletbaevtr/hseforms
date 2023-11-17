@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+from djangoProject.myforms.models import Survey
 
 
 @login_required
@@ -9,4 +11,9 @@ def myforms(request):
 
 @login_required
 def create(request):
-    return render(request, 'myforms/create.html')
+    survey = Survey.objects.create()
+    return redirect('edit_survey', unique_id=survey.unique_id)
+
+
+def edit(request):
+    return render(request, 'myforms/myforms.html')
