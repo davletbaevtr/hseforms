@@ -1,9 +1,11 @@
 import uuid
 from django.db import models
+from django.conf import settings
 
 
 class Survey(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)  # уникальный id опроса
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # создатель опроса
 
     title = models.CharField(max_length=255)  # название опроса
     description = models.TextField()  # описание опроса
