@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from djangoProject.myforms.models import Survey
+from myforms.models import Survey
 
 
 @login_required
@@ -11,13 +11,17 @@ def myforms(request):
 
 @login_required
 def create(request):
-    survey = Survey.objects.create()
+    survey = Survey()
+    survey.creator = request.user
+    survey.save()
+
     return redirect('edit_survey', unique_id=survey.unique_id)
 
 
 @login_required
 def edit(request, unique_id):
     survey = get_object_or_404(Survey, unique_id=unique_id)
+    # обработать ошибку
 
     # Проверка, является ли пользователь создателем опроса
     if request.user != survey.creator:

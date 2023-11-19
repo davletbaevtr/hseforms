@@ -13,11 +13,11 @@
     </div>
     <div class="Button">
         {% if user.is_authenticated %}
-            <a class="ButtonText SelectButton createButton" href="/create">
+            <a class="ButtonText SelectButton createButton" href="myforms/create">
                 Создать опрос
             </a>
         {% else %}
-            <a class="ButtonText SelectButton createButton" href="/create">
+            <a class="ButtonText SelectButton createButton" href="myforms/create">
                 Создать первый опрос
             </a>
         {% endif %}
