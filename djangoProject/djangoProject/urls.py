@@ -8,5 +8,5 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('', include('main.urls')),
     path('accounts/', include("django.contrib.auth.urls"), name='accounts'),
-    path('myforms/', include('myforms.urls'), name='myforms'),
+    path('forms/', include('forms.urls'), name='forms'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

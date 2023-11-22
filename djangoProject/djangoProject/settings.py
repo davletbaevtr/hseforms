@@ -35,7 +35,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'main',
-    'myforms',
+    'forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

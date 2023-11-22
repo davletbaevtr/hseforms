@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {{ survey.title }}
+    </title>
+    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/take_survey.css' %}">
+</head>
+<body>
+<div class="header">
+</div>
+
+<main>
+    <div class="">
+        <form method="POST" action="{% url 'submit_form' unique_id %}" autocomplete="off">
+            {% csrf_token %}
+            {% for question in questions %}
+                <div class="QuestionName">
+                    {{ question.question }}
+                </div>
+                {% if question.question_type == 'checkbox' %}
+                    <div class="CheckBoxQuestion">
+
+                    </div>
+                {% elif question.question_type == 'multiple' %}
+                    <div class="MultiplyQuestion">
+
+                    </div>
+                {% elif question.question_type == 'text' %}
+                    <div class="TextQuestion">
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</main>
+
+<footer>
+    <a class="contacts" href="/contacts">
+        Контакты
+    </a>
+</footer>
+</body>
