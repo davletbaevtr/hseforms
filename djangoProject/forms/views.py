@@ -41,6 +41,17 @@ def take_survey(request, unique_id):
         if not request.user.is_authenticated:
             return redirect('login')
 
-    questions = survey.questions.prefetch_related('options').order_by('number')
+    question_data = []
+    for question in survey.questions.all():
+        choices = list(question.choices.all()) if question.question_type in ['checkbox', 'multiple'] else None
+        question_data.append({
+            'question': question,
+            'choices': choices
+        })
 
-    return render(request, 'forms/take_survey.html', {'unique_id': unique_id, 'questions': questions})
+    context = {
+        'unique_id': unique_id,
+        'question_data': question_data
+    }
+
+    return render(request, 'forms/take_survey.html', context)

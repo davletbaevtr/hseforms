@@ -3,12 +3,11 @@ from django.db import models
 from django.conf import settings
 
 
+# это вопрос для банка вопрос
 class Question(models.Model):
-    number = models.IntegerField(default=1, unique=True)
     question = models.TextField()  # название вопроса
     # тип вопроса: текстовый ответ, выбор вариантов, множественный выбор
     question_type = models.CharField(max_length=20)  # checkbox/text/multiple
-    is_required = models.BooleanField(default=False)  # обязательный
 
     # если вопрос текстовый, то правильные текстовые ответы состоят из CorrectTextAnswer
     # если выбор вариантов, то правильный(ые) вариант(ы) состоят из Choices
@@ -20,11 +19,12 @@ class Question(models.Model):
     # иначе это поле не используется
 
     def __str__(self):
-        return f'Question {self.number}: {self.question}'
+        return f'Question: {self.question}'
 
 
 class CorrectTextAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='correct_text_answers')
+    text_answer = models.CharField()
 
 
 class Survey(models.Model):
@@ -42,10 +42,29 @@ class Survey(models.Model):
     create_datetime = models.DateTimeField(auto_now_add=True)
     update_datetime = models.DateTimeField(auto_now=True)
 
-    questions = models.ManyToManyField(Question, related_name='questions')
-
     def __str__(self):
         return self.title
+
+
+# это вопрос для опроса, его можно скопировать с банка вопросов либо создать самому в редакторе
+class QuestionSurvey(models.Model):
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
+    question = models.TextField()  # название вопроса
+    # тип вопроса: текстовый ответ, выбор вариантов, множественный выбор
+    question_type = models.CharField(max_length=20)  # checkbox/text/multiple
+    is_required = models.BooleanField(default=False)  # обязательный
+
+    # если вопрос текстовый, то правильные текстовые ответы состоят из CorrectTextAnswer
+    # если выбор вариантов, то правильный(ые) вариант(ы) состоят из Choices
+
+    # если квиз и текстовый ответ либо выбор варианта,
+    # то стоимость правильного ответа и стоимость неправильного ответа
+    correct_score = models.IntegerField(default=0)
+    incorrect_score = models.IntegerField(default=0)
+
+    # иначе это поле не используется
+    def __str__(self):
+        return f'Question: {self.question}'
 
 
 class Choice(models.Model):
@@ -63,17 +82,16 @@ class Choice(models.Model):
         return self.choice
 
 
-# это создается только при первом ответе на опрос
+# создается при каждом прохождении опроса
 class UserSurvey(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    max_score = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user.name} - {self.survey.title}'
 
 
-# а это создается при каждом прохождении опроса
 class UserResponse(models.Model):
     user_survey = models.ForeignKey(UserSurvey, on_delete=models.CASCADE, related_name='responses')
     question = models.ForeignKey(Question, on_delete=models.CASCADE)

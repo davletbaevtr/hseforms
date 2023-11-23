@@ -17,26 +17,33 @@
     <div class="">
         <form method="POST" action="{% url 'submit_form' unique_id %}" autocomplete="off">
             {% csrf_token %}
-            {% for question in questions %}
+            {% for question_data in questions_data %}
                 <div class="QuestionName">
-                    {{ question.question }}
+                    {{ question_data['question'].question }}
                 </div>
-                {% if question.question_type == 'checkbox' %}
-                    <div class="CheckBoxQuestion">
-
-                    </div>
-                {% elif question.question_type == 'multiple' %}
+                {% if question_data['question'].question_type == 'checkbox' %}
+                    {% for choice in question_data['choices'] %}
+                        <input type="checkbox" name="{{ question.id }}" id="{{ choice.id }}" {% if question.required %} required {% endif %} value="{{ choice.id }}">
+                        <label for="{{ choice.id }}" class="txtClr">{{ choice.choice }}</label>
+                    {% endfor %}
+                {% elif question_data['question'].question_type == 'multiple' %}
                     <div class="MultiplyQuestion">
-
+                        {% for choice in question_data['choices'] %}
+                            <input type="radio" name="{{question.id}}" id="{{choice.id}}" {% if question.required %} required {% endif %} value="{{choice.id}}">
+                            <label for="{{choice.id}}" class="txtClr">{{choice.choice}}</label>
+                        {% endfor %}
                     </div>
-                {% elif question.question_type == 'text' %}
+                {% elif question_data['question'].question_type == 'text' %}
                     <div class="TextQuestion">
-
+                        <label>
+                            <input type="text" name="{{ question_data['question'].id }}" placeholder="Ваш ответ">
+                        </label>
                     </div>
                 {% endif %}
             {% endfor %}
 
             <input type="submit" value="Submit">
+
         </form>
     </div>
 </main>
