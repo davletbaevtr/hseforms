@@ -18,7 +18,7 @@ class Question(models.Model):
 
 class CorrectTextAnswer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='correct_text_answers')
-    text_answer = models.CharField()
+    text_answer = models.TextField()
 
 
 class Survey(models.Model):
