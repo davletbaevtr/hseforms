@@ -12,12 +12,6 @@ class Question(models.Model):
     # если вопрос текстовый, то правильные текстовые ответы состоят из CorrectTextAnswer
     # если выбор вариантов, то правильный(ые) вариант(ы) состоят из Choices
 
-    # если квиз и текстовый ответ либо выбор варианта,
-    # то стоимость правильного ответа и стоимость неправильного ответа
-    correct_score = models.IntegerField(default=0)
-    incorrect_score = models.IntegerField(default=0)
-    # иначе это поле не используется
-
     def __str__(self):
         return f'Question: {self.question}'
 
