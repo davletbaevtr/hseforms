@@ -4,7 +4,7 @@ from django.conf import settings
 
 
 # это вопрос для банка вопрос
-class Question(models.Model):
+class QuestionBank(models.Model):
     question = models.TextField()  # название вопроса
     # тип вопроса: текстовый ответ, выбор вариантов, множественный выбор
     question_type = models.CharField(max_length=20)  # checkbox/text/multiple
@@ -16,13 +16,13 @@ class Question(models.Model):
         return f'Question: {self.question}'
 
 
-class CorrectTextAnswer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='correct_text_answers')
+class CorrectTextAnswerBank(models.Model):
+    question = models.ForeignKey(QuestionBank, on_delete=models.CASCADE, related_name='correct_text_answers')
     text_answer = models.TextField()
 
 
 class Survey(models.Model):
-    unique_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)  # уникальный id опроса
+    unique_id = models.UUIDField(default=uuid.uuid4, editable=True, unique=True)  # уникальный id опроса
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # создатель опроса
 
     title = models.CharField(max_length=255, default='Название опроса')
@@ -61,8 +61,23 @@ class QuestionSurvey(models.Model):
         return f'Question: {self.question}'
 
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='choices')
+# это для вопроса из опроса ответ
+class CorrectTextAnswerSurvey(models.Model):
+    question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE, related_name='correct_text_answers')
+    text_answer = models.TextField()
+
+
+class ChoiceBank(models.Model):
+    question = models.ForeignKey(QuestionBank, on_delete=models.CASCADE, related_name='choices')
+    choice = models.CharField(max_length=100)  # название варианта
+    is_answer = models.BooleanField(default=False)  # является ли данный вариант ответом
+
+    def __str__(self):
+        return self.choice
+
+
+class ChoiceSurvey(models.Model):
+    question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE, related_name='choices')
     choice = models.CharField(max_length=100)  # название варианта
     is_answer = models.BooleanField(default=False)  # является ли данный вариант ответом
 
@@ -88,10 +103,10 @@ class UserSurvey(models.Model):
 
 class UserResponse(models.Model):
     user_survey = models.ForeignKey(UserSurvey, on_delete=models.CASCADE, related_name='responses')
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE)
 
     response_text = models.TextField()  # если вопрос текстового типа
-    selected_options = models.ManyToManyField(Choice)  # иначе
+    selected_options = models.ManyToManyField(ChoiceSurvey)  # иначе
 
     score = models.IntegerField(default=0)
 

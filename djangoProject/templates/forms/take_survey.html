@@ -15,28 +15,29 @@
 
 <main>
     <div class="">
-        <form method="POST" action="{% url 'submit_form' unique_id %}" autocomplete="off">
+{#    action="{% url 'submit_form' unique_id %}"#}
+        <form method="POST" autocomplete="off">
             {% csrf_token %}
             {% for question_data in questions_data %}
                 <div class="QuestionName">
-                    {{ question_data['question'].question }}
+                    {{ question_data.question.question }}
                 </div>
-                {% if question_data['question'].question_type == 'checkbox' %}
-                    {% for choice in question_data['choices'] %}
-                        <input type="checkbox" name="{{ question.id }}" id="{{ choice.id }}" {% if question.required %} required {% endif %} value="{{ choice.id }}">
+                {% if question_data.question.question_type == 'checkbox' %}
+                    {% for choice in question_data.choices %}
+                        <input type="radio" name="{{ question_data.question.id }}" id="{{ choice.id }}" {% if question_data.question.required %} required {% endif %} value="{{ choice.id }}">
                         <label for="{{ choice.id }}" class="txtClr">{{ choice.choice }}</label>
                     {% endfor %}
-                {% elif question_data['question'].question_type == 'multiple' %}
+                {% elif question_data.question..question_type == 'multiple' %}
                     <div class="MultiplyQuestion">
-                        {% for choice in question_data['choices'] %}
-                            <input type="radio" name="{{question.id}}" id="{{choice.id}}" {% if question.required %} required {% endif %} value="{{choice.id}}">
+                        {% for choice in question_data.choices %}
+                            <input type="checkbox" name="{{question_data.question.id}}" id="{{choice.id}}" {% if question_data.question.required %} required {% endif %} value="{{choice.id}}">
                             <label for="{{choice.id}}" class="txtClr">{{choice.choice}}</label>
                         {% endfor %}
                     </div>
-                {% elif question_data['question'].question_type == 'text' %}
+                {% elif question_data.question.question_type == 'text' %}
                     <div class="TextQuestion">
                         <label>
-                            <input type="text" name="{{ question_data['question'].id }}" placeholder="Ваш ответ">
+                            <input type="text" name="{{ question_data.question.id }}" placeholder="Ваш ответ">
                         </label>
                     </div>
                 {% endif %}
