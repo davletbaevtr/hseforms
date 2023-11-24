@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import Survey
+from .forms import SurveyForm
 
 
 @login_required
@@ -14,8 +15,12 @@ def create(request):
     survey = Survey()
     survey.creator = request.user
     survey.save()
-
-    return redirect('edit_survey', unique_id=survey.unique_id)
+    survey_form = SurveyForm(request.POST or None)
+    if request.method == "POST":
+        if survey_form.is_valid():
+            survey_form.save()
+            return redirect('edit_survey', unique_id=survey.unique_id)
+    return render(request, 'forms/create_survey.html', {'survey_form': survey_form})
 
 
 @login_required

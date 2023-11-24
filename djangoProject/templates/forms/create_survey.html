@@ -1,0 +1,6 @@
+
+<form action='.' method="POST">
+    {% csrf_token %}
+        {{ survey_form.as_p }}
+    <button style='margin-top: 10px; ' type='submit'>submit</button>
+</form>
