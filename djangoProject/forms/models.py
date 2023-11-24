@@ -43,6 +43,7 @@ class Survey(models.Model):
 # это вопрос для опроса, его можно скопировать с банка вопросов либо создать самому в редакторе
 class QuestionSurvey(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
+    number = models.IntegerField(default=0)
     question = models.TextField()  # название вопроса
     # тип вопроса: текстовый ответ, выбор вариантов, множественный выбор
     question_type = models.CharField(max_length=20)  # checkbox/text/multiple
@@ -80,6 +81,7 @@ class ChoiceSurvey(models.Model):
     question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE, related_name='choices')
     choice = models.CharField(max_length=100)  # название варианта
     is_answer = models.BooleanField(default=False)  # является ли данный вариант ответом
+    number = models.IntegerField(default=0)
 
     # если квиз с множественным выбором, то стоимость правильного и неправильного варианта,
     # то есть считается частичный ответ и подсчитывается стоимость
@@ -95,7 +97,7 @@ class ChoiceSurvey(models.Model):
 class UserSurvey(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
-    score = models.IntegerField(default=0)
+    score_sum = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.user.name} - {self.survey.title}'

@@ -1,57 +1,58 @@
+{% extends 'layout.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>
-        {{ survey.title }}
-    </title>
-    <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+
+{% block head %}
     <link rel="stylesheet" href="{% static 'css/take_survey.css' %}">
-</head>
-<body>
-<div class="header">
-</div>
+{% endblock %}
 
-<main>
-    <div class="">
-{#    action="{% url 'submit_form' unique_id %}"#}
-        <form method="POST" autocomplete="off">
-            {% csrf_token %}
-            {% for question_data in questions_data %}
-                <div class="QuestionName">
-                    {{ question_data.question.question }}
+{% block title %}{{ survey.title }}{% endblock %}
+
+{% block section %}
+    <div class="d-flex width-100 height-100 justify-center">
+        <div class="d-flex flex-column height-100 mainTheme">
+            <div class="d-flex justify-center font-size-big-big surveyTitle font-weight-500">
+                {{ survey.title }}
+            </div>
+            <form class="formTheme" method="POST" action="{% url 'submit_response' unique_id %}" autocomplete="off">
+                {% csrf_token %}
+                {% for question_data in questions_data %}
+                    <div class="d-flex margin-top-30 font-size-normal margin-left-40 font-weight-500">
+                        {{ question_data.question.question }}
+                    </div>
+                    {% if question_data.question.question_type == 'checkbox' %}
+                        <div class="d-flex flex-column margin-top-10">
+                            {% for choice in question_data.choices %}
+                                <div class="d-flex font-size-normal margin-left-40 margin-top-5">
+                                    <input type="radio" name="{{ question_data.question.number }}" id="{{ choice.number }}"
+                                            {% if question_data.question.required %} required {% endif %}
+                                           value="{{ choice.number }}">
+                                    <label for="{{ choice.number }}" class="txtClr">{{ choice.choice }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% elif question_data.question.question_type == 'multiple' %}
+                        <div class="d-flex flex-column margin-top-10">
+                            {% for choice in question_data.choices %}
+                                <div class="d-flex font-size-normal margin-left-40 margin-top-5-center">
+                                    <input type="checkbox" name="{{ question_data.question.number }}" id="{{ choice.number }}"
+                                            {% if question_data.question.required %} required {% endif %}
+                                           value="{{ choice.number }}">
+                                    <label for="{{ choice.number }}" class="txtClr">{{ choice.choice }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% elif question_data.question.question_type == 'text' %}
+                        <div class="d-flex margin-top-10 margin-left-45">
+                            <label>
+                                <input class="font-size-normal border-radius-5 input-text-padding" type="text" name="{{ question_data.question.number }}" placeholder="Ваш ответ">
+                            </label>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="d-flex justify-center margin-top-30 margin-bottom-30">
+                    <input class="background-blue border-radius-5 no-border color-white font-weight-500 button-text-padding font-size-normal" type="submit" value="Отправить">
                 </div>
-                {% if question_data.question.question_type == 'checkbox' %}
-                    {% for choice in question_data.choices %}
-                        <input type="radio" name="{{ question_data.question.id }}" id="{{ choice.id }}" {% if question_data.question.required %} required {% endif %} value="{{ choice.id }}">
-                        <label for="{{ choice.id }}" class="txtClr">{{ choice.choice }}</label>
-                    {% endfor %}
-                {% elif question_data.question..question_type == 'multiple' %}
-                    <div class="MultiplyQuestion">
-                        {% for choice in question_data.choices %}
-                            <input type="checkbox" name="{{question_data.question.id}}" id="{{choice.id}}" {% if question_data.question.required %} required {% endif %} value="{{choice.id}}">
-                            <label for="{{choice.id}}" class="txtClr">{{choice.choice}}</label>
-                        {% endfor %}
-                    </div>
-                {% elif question_data.question.question_type == 'text' %}
-                    <div class="TextQuestion">
-                        <label>
-                            <input type="text" name="{{ question_data.question.id }}" placeholder="Ваш ответ">
-                        </label>
-                    </div>
-                {% endif %}
-            {% endfor %}
-
-            <input type="submit" value="Submit">
-
-        </form>
+            </form>
+        </div>
     </div>
-</main>
-
-<footer>
-    <a class="contacts" href="/contacts">
-        Контакты
-    </a>
-</footer>
-</body>
+{% endblock %}

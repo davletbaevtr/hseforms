@@ -7,10 +7,11 @@
         {% block title %}{% endblock %}
     </title>
     <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+    <link rel="icon" href="{% static 'media/favicon.png' %}" type="image/png">
     {% block head %}{% endblock %}
 </head>
 
-<body>
+<body class="d-flex font-family-apple flex-column margin-0">
 <div class="header">
     <div class="headerLeft">
         <div class="headerLink notSelectable">
