@@ -66,6 +66,7 @@ def take_survey(request, unique_id):
 
 def submit_response(request, unique_id):
     survey = get_object_or_404(Survey, unique_id=unique_id)
+    survey_is_quiz = survey.is_quiz
 
     # проверить работу
     if survey.is_authentication_required:
@@ -73,29 +74,49 @@ def submit_response(request, unique_id):
             return redirect('login')
 
     if request.method == "POST":
-        print(request.POST)
-        user_survey = UserSurvey()
+        user_survey = UserSurvey(survey=survey)
 
         if survey.is_authentication_required:
             user_survey.user = request.user
 
-        user_survey.survey = survey
-
         questions = survey.questions.all().order_by('number')
         request_post = request.POST
+        score_sum = 0
         for el in request_post:
             # Excluding csrf token
             if el == "csrfmiddlewaretoken":
                 continue
             question = questions[el]
+            user_response = UserResponse(user_survey=survey, question=question)
+            answer = request_post[el]
             if question.question_type == 'text':
-                user_response = UserResponse(
-                    user_survey=survey,
-                    question=question,
-                    response_text=request_post.get_list(el)
-                )
-            else:
-                pass
+                user_response.response_text = answer
+                if survey_is_quiz:
+                    if answer in question.correct_text_answers.all():
+                        question_correct_score = question.correct_score
+                        user_response.score = question_correct_score
+                        score_sum += question_correct_score
+                    else:
+                        question_incorrect_score = question.incorrect_score
+                        user_response.score = question_incorrect_score
+                        score_sum -= question_incorrect_score
+            elif question.question_type in ['checkbox', 'multiple']:
+                question_choices = question.choices.all()
+                for choice_number in answer:
+                    choice = question_choices.get(number=choice_number)
+                    user_response.selected_options.add(choice)
+                    if survey_is_quiz:
+                        choice_score = choice.score
+                        if choice.is_answer:
+                            user_response.score = choice_score
+                            score_sum += choice_score
+                        else:
+                            user_response.score = -choice_score
+                            score_sum -= choice_score
+            user_response.save()
+
+        if survey_is_quiz:
+            user_survey.score_sum = score_sum
 
         user_survey.save()
 

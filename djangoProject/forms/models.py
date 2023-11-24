@@ -36,6 +36,8 @@ class Survey(models.Model):
     create_datetime = models.DateTimeField(auto_now_add=True)
     update_datetime = models.DateTimeField(auto_now=True)
 
+    max_score = models.IntegerField(default=0)
+
     def __str__(self):
         return self.title
 
@@ -85,8 +87,7 @@ class ChoiceSurvey(models.Model):
 
     # если квиз с множественным выбором, то стоимость правильного и неправильного варианта,
     # то есть считается частичный ответ и подсчитывается стоимость
-    correct_score = models.IntegerField(default=0)
-    incorrect_score = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
     # иначе эти поля не используется
 
     def __str__(self):
