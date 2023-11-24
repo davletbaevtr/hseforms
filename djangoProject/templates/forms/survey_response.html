@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layout.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/survey.css' %}">
+{% endblock %}
+
+{% block title %}{{survey.title}} - HSEforms{% endblock %}
+
+{% block section %}
+    
+{% endblock %}

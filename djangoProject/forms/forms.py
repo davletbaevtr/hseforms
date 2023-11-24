@@ -1,11 +1,11 @@
 from django import forms
 from .models import UserResponse, Survey
-from forms.models import Option
+from .models import ChoiceSurvey
 
 
 class UserResponseCheckBoxForm(forms.ModelForm):
     answer = forms.ModelMultipleChoiceField(
-        queryset=Option.objects.all(),
+        queryset=ChoiceSurvey.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=False
     )
@@ -21,6 +21,7 @@ class UserResponseTextForm(forms.ModelForm):
     class Meta:
         model = UserResponse
         fields = ['answer']
+
 
 class SurveyForm(forms.ModelForm):
     class Meta:

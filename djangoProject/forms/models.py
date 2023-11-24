@@ -12,9 +12,6 @@ class QuestionBank(models.Model):
     # если вопрос текстовый, то правильные текстовые ответы состоят из CorrectTextAnswer
     # если выбор вариантов, то правильный(ые) вариант(ы) состоят из Choices
 
-    def __str__(self):
-        return f'Question: {self.question}'
-
 
 class CorrectTextAnswerBank(models.Model):
     question = models.ForeignKey(QuestionBank, on_delete=models.CASCADE, related_name='correct_text_answers')
@@ -38,9 +35,6 @@ class Survey(models.Model):
 
     max_score = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.title
-
 
 # это вопрос для опроса, его можно скопировать с банка вопросов либо создать самому в редакторе
 class QuestionSurvey(models.Model):
@@ -60,8 +54,6 @@ class QuestionSurvey(models.Model):
     incorrect_score = models.IntegerField(default=0)
 
     # иначе это поле не используется
-    def __str__(self):
-        return f'Question: {self.question}'
 
 
 # это для вопроса из опроса ответ
@@ -75,9 +67,6 @@ class ChoiceBank(models.Model):
     choice = models.CharField(max_length=100)  # название варианта
     is_answer = models.BooleanField(default=False)  # является ли данный вариант ответом
 
-    def __str__(self):
-        return self.choice
-
 
 class ChoiceSurvey(models.Model):
     question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE, related_name='choices')
@@ -90,9 +79,6 @@ class ChoiceSurvey(models.Model):
     score = models.IntegerField(default=0)
     # иначе эти поля не используется
 
-    def __str__(self):
-        return self.choice
-
 
 # создается при каждом прохождении опроса
 class UserSurvey(models.Model):
@@ -100,19 +86,12 @@ class UserSurvey(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     score_sum = models.IntegerField(default=0)
 
-    def __str__(self):
-        return f'{self.user.name} - {self.survey.title}'
-
 
 class UserResponse(models.Model):
     user_survey = models.ForeignKey(UserSurvey, on_delete=models.CASCADE, related_name='responses')
     question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE)
 
-    response_text = models.TextField()  # если вопрос текстового типа
+    response_text = models.TextField(default='None')  # если вопрос текстового типа
     selected_options = models.ManyToManyField(ChoiceSurvey)  # иначе
 
     score = models.IntegerField(default=0)
-
-    def __str__(self):
-        selected_options_str = ', '.join([option.choice for option in self.selected_options.all()])
-        return f'{self.user_survey.user.name} - {self.user_survey.survey.title} - {self.question.question} - {selected_options_str}'

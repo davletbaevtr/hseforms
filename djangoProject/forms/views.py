@@ -78,15 +78,18 @@ def submit_response(request, unique_id):
         if survey.is_authentication_required:
             user_survey.user = request.user
 
-        questions = survey.questions.all().order_by('number')
+        user_survey.save()
+
+        questions = survey.questions.all()
         request_post = request.POST
         score_sum = 0
         for el in request_post:
             # Excluding csrf token
             if el == "csrfmiddlewaretoken":
                 continue
-            question = questions[el]
-            user_response = UserResponse(user_survey=survey, question=question)
+            question = questions.get(number=int(el))
+            user_response = UserResponse(user_survey=user_survey, question=question)
+            user_response.save()
             answer = request_post[el]
             if question.question_type == 'text':
                 user_response.response_text = answer
@@ -100,9 +103,8 @@ def submit_response(request, unique_id):
                         user_response.score = question_incorrect_score
                         score_sum -= question_incorrect_score
             elif question.question_type in ['checkbox', 'multiple']:
-                question_choices = question.choices.all()
                 for choice_number in answer:
-                    choice = question_choices.get(number=choice_number)
+                    choice = question.choices.get(number=choice_number)
                     user_response.selected_options.add(choice)
                     if survey_is_quiz:
                         choice_score = choice.score
@@ -116,8 +118,7 @@ def submit_response(request, unique_id):
 
         if survey_is_quiz:
             user_survey.score_sum = score_sum
-
-        user_survey.save()
+            user_survey.save()
 
         return render(request, "forms/survey_response.html", {"survey": survey})
     else:
