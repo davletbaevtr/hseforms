@@ -3,7 +3,16 @@
 {% block title %}Создать форму{% endblock %}
 
 {% block section %}
-    <div>
+
+<form action='.' method="POST">
+    <div class="center-form">
+        <div class="MainFormBox">
+                    {% csrf_token %}
+        {{ survey_form.as_p }}
+        <button style='margin-top: 10px;' type='submit', class="SubmitButton">Submit</button>
+        </div>
 
     </div>
+</form>
+
 {% endblock %}

@@ -13,15 +13,14 @@ def myforms(request):
 
 @login_required
 def create(request):
-    survey = Survey()
-    survey.creator = request.user
-    survey.save()
     survey_form = SurveyForm(request.POST or None)
     if request.method == "POST":
         if survey_form.is_valid():
-            survey_form.save()
-            return redirect('edit_survey', unique_id=survey.unique_id)
-    return render(request, 'forms/create_survey.html', {'survey_form': survey_form})
+            form = survey_form.save(commit=False)
+            form.creator = request.user
+            form.save()
+            return redirect('edit_survey', unique_id=form.unique_id)
+    return render(request, 'forms/edit_survey.html', {'survey_form': survey_form})
 
 
 @login_required
