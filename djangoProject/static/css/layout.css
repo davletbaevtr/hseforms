@@ -27,7 +27,7 @@ body, html {
     align-self: stretch;
     width: 100%;
     font-size: 16px;
-    border-bottom: 1px solid rgba(0, 0, 0, .06);
+    box-shadow: 0 8px 24px 0 rgba(8,9,10,.08);
 }
 
 .notSelectable {
@@ -99,7 +99,6 @@ footer {
     align-items: center;
     flex-direction: column;
     width: 100%;
-    margin-top: 60px;
     padding-top: 20px;
     background: #f8f9fa;
 }

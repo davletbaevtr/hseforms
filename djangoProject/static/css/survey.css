@@ -11,7 +11,7 @@
 }
 
 .mainTheme {
-    min-width: 710px;
+    width: 710px;
 }
 
 .font-size-huge {
@@ -31,8 +31,9 @@
 }
 
 .formTheme {
-    border: 1px solid rgba(0, 0, 0, .06);
-    border-radius: 10px;
+    /*border: 1px solid rgba(0, 0, 0, .06);*/
+    border-radius: 20px;
+    box-shadow: 0 8px 24px 0 rgba(8,9,10,.08);
 }
 
 .surveyTitle {
@@ -68,6 +69,10 @@
     border-radius: 5px;
 }
 
+.border-radius-10 {
+    border-radius: 10px;
+}
+
 .no-border {
     border: 0;
 }
@@ -76,7 +81,7 @@
     color: white;
 }
 
-.button-text-padding {
+.submit-text-padding {
     padding: 8px 14px 8px 14px;
 }
 
@@ -98,4 +103,63 @@
 
 .input-text-padding {
     padding: 6px 12px 6px 12px;
+}
+
+.margin-top-60 {
+    margin-top: 60px;
+}
+
+.text-no-decoration {
+    text-decoration: none;
+}
+
+.button-text-padding {
+    padding: 5px 14px 8px 14px;
+}
+
+.reloadIcon {
+    padding-right: 7px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.shareButton {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+}
+
+.justify-space-between{
+    justify-content: space-between;
+}
+
+.margin-right-40 {
+    margin-right: 40px;
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.background-lightblue {
+    background: #FBFFFF;
+}
+
+.margin-top-25 {
+    margin-top: 25px;
 }

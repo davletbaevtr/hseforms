@@ -3,10 +3,100 @@
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/survey.css' %}">
+    <script>
+        function shareOnTelegram(url) {
+            window.open('https://t.me/share/url?url=' + encodeURIComponent(url));
+        }
+
+        function shareOnVK(url) {
+            window.open('https://vk.com/share.php?url=' + encodeURIComponent(url));
+        }
+
+        function shareOnWhatsApp(url) {
+            window.open('whatsapp://send?text=' + encodeURIComponent(url));
+        }
+
+        function copyToClipboard(url) {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = url;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert("Ссылка скопирована!");
+        }
+
+    </script>
 {% endblock %}
 
-{% block title %}{{survey.title}} - HSEforms{% endblock %}
+{% block title %}{{ survey.title }} - HSE Forms{% endblock %}
 
 {% block section %}
-    
+    <div class="d-flex width-100 justify-center">
+        <div class="d-flex flex-column mainTheme">
+            {#        панель спасибо#}
+            <div class="d-flex flex-column margin-top-60 formTheme">
+                {#            текст спасибо#}
+                <div class="d-flex flex-column">
+                    <div class="d-flex margin-top-10 margin-left-40 font-size-big font-weight-500">
+                        Спасибо!
+                    </div>
+                    <div class="d-flex margin-left-40 font-size-normal">
+                        Ваш ответ отправлен.
+                    </div>
+                </div>
+                {#            кнопка заполнить еще раз#}
+                <div class="d-flex margin-bottom-20 margin-top-20">
+                    <a class="d-flex margin-left-40 background-blue border-radius-5 no-border color-white font-weight-500 button-text-padding font-size-small text-no-decoration"
+                       href="/forms/{{ survey.unique_id }}">
+                        <img class="reloadIcon" src="{% static 'media/reload_icon.svg' %}"/>
+                        Заполнить форму еще раз
+                    </a>
+                </div>
+            </div>
+            <div class="d-flex formTheme margin-top-30 justify-space-between">
+                <div class="font-weight-500 font-size-normal margin-left-40 margin-top-20 margin-bottom-20">
+                    Поделиться формой
+                </div>
+                <div class="d-flex margin-right-40">
+                    <div class="d-flex">
+                        <button class="shareButton" onclick="shareOnTelegram('https://hseforms/forms/{{ survey.unique_id }}')">
+                            <img class="cursor-pointer" src="{% static 'media/telegram_logo.svg' %}" alt="Telegram"
+                                 title="Telegram">
+                        </button>
+                    </div>
+                    <div class="d-flex margin-left-5">
+                        <button class="shareButton"
+                                onclick="shareOnVK('https://hseforms/forms/{{ survey.unique_id }}')">
+                            <img class="cursor-pointer" src="{% static 'media/vk_logo.svg' %}" alt="VKontakte"
+                                 title="VKontakte">
+                        </button>
+                    </div>
+                    <div class="d-flex margin-left-5">
+                        <button class="shareButton" onclick="shareOnWhatsApp('https://hseforms/forms/{{ survey.unique_id }}')">
+                            <img class="cursor-pointer" src="{% static 'media/whatsapp_logo.svg' %}" alt="WhatsApp"
+                                 title="WhatsApp">
+                        </button>
+                    </div>
+                    <div class="d-flex margin-left-5">
+                        <button class="shareButton" onclick="copyToClipboard('https://hseforms/forms/{{ survey.unique_id }}')">
+                            <img class="cursor-pointer" src="{% static 'media/copy_icon.svg' %}" alt="Copy Link"
+                                 title="Copy Link">
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex margin-top-30 formTheme justify-space-between">
+                <div class="d-flex font-size-normal font-weight-500 margin-top-25 margin-left-40">
+                    Создайте опрос за пару минут!
+                </div>
+                <div class="d-flex margin-bottom-20 margin-top-20 margin-right-40">
+                    <a class="d-flex margin-left-40 background-blue border-radius-5 no-border color-white font-weight-500 button-text-padding font-size-normal text-no-decoration"
+                       href="/forms/create">
+                        Создать опрос
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
