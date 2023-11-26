@@ -1,18 +1,119 @@
 {% extends 'layout.html' %}
 
-{% block title %}Редактирование формы - HSE Forms{% endblock %}
+{% block title %}Создать форму{% endblock %}
 
 {% block section %}
+    <html>
+    <body>
+    <form id="quizForm" action='.' method="POST">
+        <div class="center-form">
+            <div class="MainFormBox">
+                {% csrf_token %}
+                {{ survey_form.as_p }}
+                <h3> {{ text }}</h3>
+                <div id="questions">
+                    <div class="question-form">
+                        <h2>Вопросы</h2>
+                    </div>
+                </div>
+                <button type="button" id="addQuestionButton">Добавить новый вопрос</button>
 
-<form action='.' method="POST">
-    <div class="center-form">
-        <div class="MainFormBox">
-                    {% csrf_token %}
-        {{ survey_form.as_p }}
-        <button style='margin-top: 10px;' type='submit', class="SubmitButton">Submit</button>
+                <button style='margin-top: 10px;' type='submit' , class="SubmitButton">Submit</button>
+
+            </div>
+
         </div>
+    </form>
 
-    </div>
-</form>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('quizForm');
+            const addQuestionButton = document.getElementById('addQuestionButton');
+            const questionsContainer = document.getElementById('questions');
+
+            let questionCount = 0;
+
+            addQuestionButton.addEventListener('click', function () {
+                questionCount++;
+
+                const newQuestionForm = document.createElement('div');
+                newQuestionForm.classList.add('question-form');
+
+                newQuestionForm.innerHTML = `
+                    <h3>Вопрос ${questionCount}</h3>
+                    <label>Название вопроса:</label>
+                    <input type="text" name="question_text_${questionCount}" required>
+
+                    <label>Тип вопроса:</label>
+                    <select name="question_type_${questionCount}" required onchange="addAnswerOptions(this, ${questionCount})">
+                        <option value="">Выберите тип</option>
+                        <option value="text">text</option>
+                        <option value="single_choice">single choice</option>
+                        <option value="multi_choice">multiple choice</option>
+                    </select>
+
+                    <div id="answerOptions_${questionCount}" class="answer-options" style="display: none;">
+                        <label>Варианты ответа:</label>
+                        <div id="answerOptionsWrapper_${questionCount}"></div>
+                        <button type="button" onclick="addNewAnswerOption(${questionCount}, getAnswerInputType(${questionCount}))">Добавить вариант ответа</button>
+                    </div>
+                `;
+
+                questionsContainer.appendChild(newQuestionForm);
+            });
+        });
+
+        function addAnswerOptions(selectElement, questionCount) {
+            const answerOptionsDiv = document.getElementById(`answerOptions_${questionCount}`);
+
+            if (selectElement.value === "single_choice" || selectElement.value === "multi_choice") {
+                answerOptionsDiv.style.display = "block";
+            } else {
+                answerOptionsDiv.style.display = "none";
+            }
+        }
+
+        function addNewAnswerOption(questionCount, choice_type) {
+            const answerOptionsWrapper = document.getElementById(`answerOptionsWrapper_${questionCount}`);
+            const newAnswerOption = document.createElement('div');
+
+            const optionIndex = answerOptionsWrapper.childElementCount;
+            if (choice_type == 'checkbox') {
+                            newAnswerOption.innerHTML = `
+                <label>Вариант ответа:</label>
+                <input type="${getAnswerInputType(questionCount)}" name="answer_option_${questionCount}_${optionIndex}" value="${optionIndex}">
+                <input type="text" name="answer_text_${questionCount}[]" required>
+            `;
+            } else {
+                    newAnswerOption.innerHTML = `
+                <label>Вариант ответа:</label>
+                <input type="${getAnswerInputType(questionCount)}" name="answer_option_${questionCount}" value="${optionIndex}" required>
+                <input type="text" name="answer_text_${questionCount}[]" required>
+            `;
+            }
+
+
+
+            answerOptionsWrapper.appendChild(newAnswerOption);
+        }
+
+        function getAnswerInputType(questionCount) {
+            const selectElement = document.querySelector(`[name="question_type_${questionCount}"]`);
+            return selectElement.value === 'single_choice' ? 'radio' : 'checkbox';
+        }
+
+        document.addEventListener('change', function (event) {
+            if (event.target.type === 'checkbox' && event.target.checked) {
+                const allCheckboxes = document.getElementsByName(event.target.name);
+                for (let checkbox of allCheckboxes) {
+                    if (checkbox !== event.target && event.target.type === 'checkbox') {
+                        checkbox.checked = false;
+                    }
+                }
+            }
+        });
+    </script>
+    </body>
+    </html>
 {% endblock %}

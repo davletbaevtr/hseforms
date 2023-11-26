@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Survey
 from .forms import SurveyForm
-from .models import Survey, UserSurvey, UserResponse
+from .models import Survey, UserSurvey, UserResponse, QuestionSurvey, ChoiceSurvey
 
 
 @login_required
@@ -19,7 +19,32 @@ def create(request):
             form = survey_form.save(commit=False)
             form.creator = request.user
             form.save()
-            return redirect('edit_survey', unique_id=form.unique_id)
+            for key, question_title in request.POST.items():
+                if key.startswith('question_text_'):
+                    question_number = int(key.split('_')[2])
+                    question_type = request.POST.get(f'question_type_{question_number}')
+                    all_choices = request.POST.getlist(f'answer_text_{question_number}[]')
+                    correct_answers = [int(value) for key, value in request.POST.items() if
+                                       key.startswith(f'answer_option_{question_number}')]
+
+                    question = QuestionSurvey()
+                    question.question_type = question_type
+                    question.survey = form
+                    question.question = question_title
+                    question.number = question_number
+                    question.save()
+                    if (question_type != 'text'):
+                        cnt = 1
+                        for choice in all_choices:
+                            choiceModel = ChoiceSurvey()
+                            choiceModel.question = question
+                            choiceModel.choice = choice
+                            if ((cnt-1) in correct_answers):
+                                choiceModel.is_answer = True
+                            choiceModel.number = cnt
+                            choiceModel.save()
+                            cnt += 1
+            # return redirect('edit_survey', unique_id=form.unique_id)
     return render(request, 'forms/edit_survey.html', {'survey_form': survey_form})
 
 
