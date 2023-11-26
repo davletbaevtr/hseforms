@@ -21,7 +21,7 @@ def create(request):
             form.save()
             for key, question_title in request.POST.items():
                 if key.startswith('question_text_'):
-                    question_number = int(key.split('_')[2])-1
+                    question_number = int(key.split('_')[2])
                     question_type = request.POST.get(f'question_type_{question_number}')
                     all_choices = request.POST.getlist(f'answer_text_{question_number}[]')
                     correct_answers = [int(value) for key, value in request.POST.items() if
@@ -34,12 +34,12 @@ def create(request):
                     question.number = question_number
                     question.save()
                     if (question_type != 'text'):
-                        cnt = 0
+                        cnt = 1
                         for choice in all_choices:
                             choiceModel = ChoiceSurvey()
                             choiceModel.question = question
                             choiceModel.choice = choice
-                            if (cnt in correct_answers):
+                            if ((cnt-1) in correct_answers):
                                 choiceModel.is_answer = True
                             choiceModel.number = cnt
                             choiceModel.save()

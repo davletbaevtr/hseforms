@@ -78,17 +78,17 @@
             const answerOptionsWrapper = document.getElementById(`answerOptionsWrapper_${questionCount}`);
             const newAnswerOption = document.createElement('div');
 
-            const optionIndex = answerOptionsWrapper.childElementCount + 1;
+            const optionIndex = answerOptionsWrapper.childElementCount;
             if (choice_type == 'checkbox') {
                             newAnswerOption.innerHTML = `
                 <label>Вариант ответа:</label>
-                <input type="${getAnswerInputType(questionCount)}" name="answer_option_${questionCount}_${optionIndex}" value="${optionIndex - 1}">
+                <input type="${getAnswerInputType(questionCount)}" name="answer_option_${questionCount}_${optionIndex}" value="${optionIndex}">
                 <input type="text" name="answer_text_${questionCount}[]" required>
             `;
             } else {
                     newAnswerOption.innerHTML = `
                 <label>Вариант ответа:</label>
-                <input type="${getAnswerInputType(questionCount)}" name="answer_option_${questionCount}" value="${optionIndex - 1}" required>
+                <input type="${getAnswerInputType(questionCount)}" name="answer_option_${questionCount}" value="${optionIndex}" required>
                 <input type="text" name="answer_text_${questionCount}[]" required>
             `;
             }
