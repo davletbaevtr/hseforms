@@ -26,12 +26,11 @@ def create(request):
 @login_required
 def edit(request, unique_id):
     survey = get_object_or_404(Survey, unique_id=unique_id)
-    # обработать ошибку
 
     # Проверка, является ли пользователь создателем опроса
     if request.user != survey.creator:
         # перенаправление на страницу ошибки доступа, если пользователь не создатель
-        return redirect('access_error_page')
+        return render(request, 'forms/access_error.html', {'survey': survey})
 
     # Логика редактирования(создания) опроса
 
@@ -103,17 +102,36 @@ def submit_response(request, unique_id):
                         user_response.score = question_incorrect_score
                         score_sum -= question_incorrect_score
             elif question.question_type in ['checkbox', 'multiple']:
-                for choice_number in answer:
-                    choice = question.choices.get(number=choice_number)
-                    user_response.selected_options.add(choice)
-                    if survey_is_quiz:
-                        choice_score = choice.score
-                        if choice.is_answer:
-                            user_response.score = choice_score
-                            score_sum += choice_score
+                question_is_partial_eval = question.is_partial_eval
+                if survey_is_quiz:
+                    question_correct_score = question.correct_score
+                    question_incorrect_score = question.incorrect_score
+                    if question_is_partial_eval:
+                        for choice_number in answer:
+                            choice = question.choices.get(number=choice_number)
+                            user_response.selected_options.add(choice)
+                            if choice.is_answer:
+                                user_response.score += question_correct_score
+                                score_sum += question_correct_score
+                            else:
+                                user_response.score -= question_incorrect_score
+                                score_sum -= question_incorrect_score
+                    else:
+                        for choice_number in answer:
+                            choice = question.choices.get(number=choice_number)
+                            user_response.selected_options.add(choice)
+                        if question.choices.get(is_answer=True) == user_response.selected_options:
+                            score_sum += question_correct_score
+                            user_response = question_correct_score
                         else:
-                            user_response.score = -choice_score
-                            score_sum -= choice_score
+                            score_sum -= question_incorrect_score
+                            user_response = question_incorrect_score
+                else:
+                    for choice_number in answer:
+                        choice = question.choices.get(number=choice_number)
+                        user_response.selected_options.add(choice)
+
+
             user_response.save()
 
         if survey_is_quiz:

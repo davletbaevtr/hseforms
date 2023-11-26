@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/survey.css' %}">
 {% endblock %}
 
-{% block title %}{{survey.title}} - HSE Forms{% endblock %}
+{% block title %}{{ survey.title }} - HSE Forms{% endblock %}
 
 {% block section %}
     <div class="d-flex width-100 height-100 justify-center">
@@ -17,14 +17,15 @@
                 {% csrf_token %}
                 {% for question_data in questions_data %}
                     <div class="d-flex margin-top-30 font-size-normal margin-left-40 font-weight-500">
-                        {{ question_data.question.question }}
+                        {{ question_data.question.question }}. {% if survey.is_quiz %}{{ question_data.question.score }}.{% endif %}
                     </div>
                     {% if question_data.question.question_type == 'checkbox' %}
                         <div class="d-flex flex-column margin-top-10">
                             {% for choice in question_data.choices %}
                                 <div class="d-flex font-size-normal margin-left-40 margin-top-5">
-                                    <input type="radio" name="{{ question_data.question.number }}" id="{{ choice.number }}"
-                                            {% if question_data.question.required %} required {% endif %}
+                                    <input type="radio" name="{{ question_data.question.number }}"
+                                           id="{{ choice.number }}"
+                                           {% if question_data.question.is_required %}required{% endif %}
                                            value="{{ choice.number }}">
                                     <label for="{{ choice.number }}" class="txtClr">{{ choice.choice }}</label>
                                 </div>
@@ -34,8 +35,9 @@
                         <div class="d-flex flex-column margin-top-10">
                             {% for choice in question_data.choices %}
                                 <div class="d-flex font-size-normal margin-left-40 margin-top-5-center">
-                                    <input type="checkbox" name="{{ question_data.question.number }}" id="{{ choice.number }}"
-                                            {% if question_data.question.required %} required {% endif %}
+                                    <input type="checkbox" name="{{ question_data.question.number }}"
+                                           id="{{ choice.number }}"
+                                           {% if question_data.question.is_required %}required{% endif %}
                                            value="{{ choice.number }}">
                                     <label for="{{ choice.number }}" class="txtClr">{{ choice.choice }}</label>
                                 </div>
@@ -44,13 +46,16 @@
                     {% elif question_data.question.question_type == 'text' %}
                         <div class="d-flex margin-top-10 margin-left-45">
                             <label>
-                                <input class="font-size-normal border-radius-5 input-text-padding" type="text" name="{{ question_data.question.number }}" placeholder="Ваш ответ">
+                                <input class="font-size-normal border-radius-5 input-text-padding"
+                                       {% if question_data.question.is_required %}required{% endif %} type="text"
+                                       name="{{ question_data.question.number }}" placeholder="Ваш ответ">
                             </label>
                         </div>
                     {% endif %}
                 {% endfor %}
                 <div class="d-flex justify-center margin-top-30 margin-bottom-30">
-                    <input class="background-blue border-radius-5 no-border color-white font-weight-500 submit-text-padding font-size-normal" type="submit" value="Отправить">
+                    <input class="background-blue border-radius-5 no-border color-white font-weight-500 submit-text-padding font-size-normal"
+                           type="submit" value="Отправить">
                 </div>
             </form>
         </div>

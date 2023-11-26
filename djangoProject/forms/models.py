@@ -48,12 +48,18 @@ class QuestionSurvey(models.Model):
     # если вопрос текстовый, то правильные текстовые ответы состоят из CorrectTextAnswer
     # если выбор вариантов, то правильный(ые) вариант(ы) состоят из Choices
 
-    # если квиз и текстовый ответ либо выбор варианта,
+    # если квиз,
     # то стоимость правильного ответа и стоимость неправильного ответа
+    # иначе это поле не используется
     correct_score = models.IntegerField(default=0)
     incorrect_score = models.IntegerField(default=0)
+    # можно выбрать либо частичную оценку,
+    # либо только одно множество ответов правильное,
+    # а все другие множества неправильные
+    # при частичной каждый вопрос весит correct_score, а каждая ошибка incorrect_score
+    # при одном множестве весь правильный ответ весит correct_score, а все другие весят incorrect_score
 
-    # иначе это поле не используется
+    is_partial_eval = models.BooleanField(default=False)
 
 
 # это для вопроса из опроса ответ
@@ -73,11 +79,6 @@ class ChoiceSurvey(models.Model):
     choice = models.CharField(max_length=100)  # название варианта
     is_answer = models.BooleanField(default=False)  # является ли данный вариант ответом
     number = models.IntegerField(default=0)
-
-    # если квиз с множественным выбором, то стоимость правильного и неправильного варианта,
-    # то есть считается частичный ответ и подсчитывается стоимость
-    score = models.IntegerField(default=0)
-    # иначе эти поля не используется
 
 
 # создается при каждом прохождении опроса
