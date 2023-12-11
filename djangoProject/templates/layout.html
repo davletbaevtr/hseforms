@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        {% block title %}{% endblock %}
+        {% block title %}{% endblock %} - HSE Forms
     </title>
     <link rel="stylesheet" href="{% static 'css/layout.css' %}">
     <link rel="icon" href="{% static 'media/favicon.png' %}" type="image/png">
@@ -41,7 +41,7 @@
         </div>
         <div class="headerLink">
             {% if user.is_authenticated %}
-                <a class="headerButton withIcon" href="{% url 'logout' %}">
+                <a class="headerButton withIcon" href="{% url 'logout' %}?next={{ request.path }}">
                     <img class="loginIcon" src="{% static 'media/login_icon.svg' %}"/>
                     Выход
                 </a>
@@ -59,9 +59,14 @@
     {% block section %}{% endblock %}
 </main>
 <footer>
-    <a class="contacts">
-        Contact us by Telegram: @noname_td; @z1lch; @tyubelova.
-    </a>
+    <div class="d-flex justify-right padding-bottom-20 width-100">
+        <a class="text-no-decoration color-black font-size-normal font-weight-500 margin-right-40 nowrap" href="/contacts">
+            О нас
+        </a>
+        <a class="text-no-decoration color-black font-size-normal font-weight-500 margin-right-40 nowrap" href="">
+            Сообщить об ошибке
+        </a>
+    </div>
 </footer>
 </body>
 </html>

@@ -20,7 +20,9 @@ class CorrectTextAnswerBank(models.Model):
 
 class Survey(models.Model):
     unique_id = models.UUIDField(default=uuid.uuid4, editable=True, unique=True)  # уникальный id опроса
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # создатель опроса
+
+    # создатель опроса
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='surveys')
 
     title = models.CharField(max_length=255, default='Название опроса')
     description = models.TextField(default='Описание опроса')
@@ -41,8 +43,7 @@ class QuestionSurvey(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='questions')
     number = models.IntegerField(default=0)
     question = models.TextField()  # название вопроса
-    # тип вопроса: текстовый ответ, выбор вариантов, множественный выбор
-    question_type = models.CharField(max_length=20)  # checkbox/text/multiple
+    question_type = models.CharField(max_length=20)  # single_choice/text/multi_choice
     is_required = models.BooleanField(default=False)  # обязательный
 
     # если вопрос текстовый, то правильные текстовые ответы состоят из CorrectTextAnswer
@@ -53,12 +54,12 @@ class QuestionSurvey(models.Model):
     # иначе это поле не используется
     correct_score = models.IntegerField(default=0)
     incorrect_score = models.IntegerField(default=0)
+
     # можно выбрать либо частичную оценку,
     # либо только одно множество ответов правильное,
     # а все другие множества неправильные
     # при частичной каждый вопрос весит correct_score, а каждая ошибка incorrect_score
     # при одном множестве весь правильный ответ весит correct_score, а все другие весят incorrect_score
-
     is_partial_eval = models.BooleanField(default=False)
 
 
@@ -83,7 +84,7 @@ class ChoiceSurvey(models.Model):
 
 # создается при каждом прохождении опроса
 class UserSurvey(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_responses', null=True)
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     score_sum = models.IntegerField(default=0)
 
@@ -92,7 +93,7 @@ class UserResponse(models.Model):
     user_survey = models.ForeignKey(UserSurvey, on_delete=models.CASCADE, related_name='responses')
     question = models.ForeignKey(QuestionSurvey, on_delete=models.CASCADE)
 
-    response_text = models.TextField(default='None')  # если вопрос текстового типа
+    response_text = models.TextField()  # если вопрос текстового типа
     selected_options = models.ManyToManyField(ChoiceSurvey)  # иначе
 
     score = models.IntegerField(default=0)

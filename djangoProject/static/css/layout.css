@@ -158,7 +158,7 @@ main {
 
 .SelectButton {
     background-color: #0d40ff;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .Button {
@@ -167,15 +167,6 @@ main {
     padding: 0;
     border: none;
     outline: none;
-}
-
-.contacts {
-    white-space: nowrap;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 15px;
-    color: black;
-    padding-bottom: 20px;
 }
 
 .selectHeaderText {
@@ -233,4 +224,48 @@ main {
     text-decoration: none;
     margin-bottom: 12px;
     cursor: pointer;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.padding-bottom-20 {
+    padding-bottom: 20px;
+}
+
+.text-no-decoration {
+    text-decoration: none;
+}
+
+.color-black {
+    color: black;
+}
+
+.font-size-normal {
+    font-size: 20px;
+}
+
+.font-weight-500 {
+    font-weight: 500;
+}
+
+.justify-right {
+    justify-content: right;
+}
+
+.width-100 {
+    width: 100%;
+}
+
+.margin-left-45 {
+    margin-left: 45px;
+}
+
+.margin-right-40 {
+    margin-right: 40px;
+}
+
+.min-width-360 {
+    min-width: 360px;
 }

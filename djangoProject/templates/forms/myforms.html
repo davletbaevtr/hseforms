@@ -1,11 +1,37 @@
 {% extends 'layout.html' %}
+{% load static %}
 
-{% block title %}Мои формы - HSE Forms{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/survey.css' %}">
+{% endblock %}
+
+{% block title %}Мои формы{% endblock %}
 
 {% block header_myforms_text %}selectHeaderText{% endblock %}
 
 {% block section %}
-    <div>
-{#кнопку создать опрос добавить#}
+    <div class="d-flex width-100 justify-center">
+        {% if have_survey %}
+            <div class="d-flex margin-60 wrap width-100">
+                {% for survey in surveys %}
+                    <a class="d-flex formTheme surveyTheme text-no-decoration margin-bottom-30 margin-left-40 margin-right-40 color-black font-size-normal font-weight-500"
+                       href="{% url 'edit_survey' survey.unique_id %}">
+                        <div class="margin-top-30 margin-bottom-30 margin-left-40 margin-right-40">
+                            {{ survey.title }}<br>
+                            {{ survey.update_datetime }}
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="d-flex flex-column margin-top-60 min-width-360 margin-bottom-30">
+                <div class="font-size-big font-weight-500 margin-top-60">
+                    У вас пока нет ни одного опроса
+                </div>
+                <a class="SelectButton ButtonText margin-top-60" href="/forms/create">
+                    Создать новый опрос
+                </a>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

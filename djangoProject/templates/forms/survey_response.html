@@ -29,14 +29,12 @@
     </script>
 {% endblock %}
 
-{% block title %}{{ survey.title }} - HSE Forms{% endblock %}
+{% block title %}{{ survey_title }}{% endblock %}
 
 {% block section %}
     <div class="d-flex width-100 justify-center">
         <div class="d-flex flex-column mainTheme">
-            {#        панель спасибо#}
             <div class="d-flex flex-column margin-top-60 formTheme">
-                {#            текст спасибо#}
                 <div class="d-flex flex-column">
                     <div class="d-flex margin-top-10 margin-left-40 font-size-big font-weight-500">
                         Спасибо!
@@ -45,10 +43,9 @@
                         Ваш ответ отправлен.
                     </div>
                 </div>
-                {#            кнопка заполнить еще раз#}
                 <div class="d-flex margin-bottom-20 margin-top-20">
                     <a class="d-flex margin-left-40 background-blue border-radius-5 no-border color-white font-weight-500 button-text-padding font-size-small text-no-decoration"
-                       href="/forms/{{ survey.unique_id }}">
+                       href="/forms/{{ unique_id }}">
                         <img class="reloadIcon" src="{% static 'media/reload_icon.svg' %}"/>
                         Заполнить форму еще раз
                     </a>
@@ -60,26 +57,26 @@
                 </div>
                 <div class="d-flex margin-right-40">
                     <div class="d-flex">
-                        <button class="shareButton" onclick="shareOnTelegram('https://hseforms/forms/{{ survey.unique_id }}')">
+                        <button class="shareButton" onclick="shareOnTelegram('https://hseforms.ru/forms/{{ unique_id }}')">
                             <img class="cursor-pointer" src="{% static 'media/telegram_logo.svg' %}" alt="Telegram"
                                  title="Telegram">
                         </button>
                     </div>
                     <div class="d-flex margin-left-5">
                         <button class="shareButton"
-                                onclick="shareOnVK('https://hseforms/forms/{{ survey.unique_id }}')">
+                                onclick="shareOnVK('https://hseforms.ru/forms/{{ unique_id }}')">
                             <img class="cursor-pointer" src="{% static 'media/vk_logo.svg' %}" alt="VKontakte"
                                  title="VKontakte">
                         </button>
                     </div>
                     <div class="d-flex margin-left-5">
-                        <button class="shareButton" onclick="shareOnWhatsApp('https://hseforms/forms/{{ survey.unique_id }}')">
+                        <button class="shareButton" onclick="shareOnWhatsApp('https://hseforms.ru/forms/{{ unique_id }}')">
                             <img class="cursor-pointer" src="{% static 'media/whatsapp_logo.svg' %}" alt="WhatsApp"
                                  title="WhatsApp">
                         </button>
                     </div>
                     <div class="d-flex margin-left-5">
-                        <button class="shareButton" onclick="copyToClipboard('https://hseforms/forms/{{ survey.unique_id }}')">
+                        <button class="shareButton" onclick="copyToClipboard('https://hseforms.ru/forms/{{ unique_id }}')">
                             <img class="cursor-pointer" src="{% static 'media/copy_icon.svg' %}" alt="Copy Link"
                                  title="Copy Link">
                         </button>
