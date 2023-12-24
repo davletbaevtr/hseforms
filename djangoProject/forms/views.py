@@ -17,7 +17,7 @@ def myforms(request):
     print(have_surveys)
 
     context = {
-        'no_survey': have_surveys,
+        'have_survey': have_surveys,
         'surveys': surveys,
     }
 

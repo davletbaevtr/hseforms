@@ -9,7 +9,10 @@
         <div class="center-form">
             <div class="MainFormBox">
                 {% csrf_token %}
-                {{ survey_form.as_p }}
+                <h2>Создать опрос</h2>
+                {{ survey_form.title}}
+                <h2>описание</h2>
+                {{ survey_form.description }}
                 <h3> {{ text }}</h3>
                 <div id="questions">
                     <div class="question-form">
