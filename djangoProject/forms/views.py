@@ -57,7 +57,7 @@ def create(request):
                             choiceModel.number = cnt
                             choiceModel.save()
                             cnt += 1
-            # return redirect('edit_survey', unique_id=form.unique_id)
+            return render(request, 'main/main.html')
     return render(request, 'forms/edit_survey.html', {'survey_form': survey_form})
 
 
@@ -71,8 +71,8 @@ def edit(request, unique_id):
         return render(request, 'forms/access_error.html', {'survey': survey})
 
     # Логика редактирования(создания) опроса
-
-    return render(request, 'forms/edit_survey.html', {'survey': survey})
+    survey.unique_id
+    return redirect(f'/forms/{survey.unique_id}')
 
 
 def take_survey(request, unique_id):
