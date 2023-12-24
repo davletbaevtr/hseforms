@@ -238,7 +238,7 @@ def submit_response(request, unique_id):
             user_survey.save()
 
             questions = {q.number: q for q in survey.questions.all()}
-            choices_by_question = {q.id: list(q.choices.all()) for q in survey.questions.all()}
+            choices_by_question = {q.number: list(q.choices.all()) for q in survey.questions.all()}
 
             if survey.is_quiz:
                 user_survey.score_sum = quiz_request_post_parse(request.POST, questions, choices_by_question,
