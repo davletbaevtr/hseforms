@@ -70,7 +70,6 @@ def edit(request, unique_id):
         return render(request, 'forms/access_error.html', {'survey': survey})
 
     # Логика редактирования(создания) опроса
-    survey.unique_id
     return redirect(f'/forms/{survey.unique_id}')
 
 
@@ -85,6 +84,7 @@ def take_survey(request, unique_id):
         )
     except Http404:
         return render(request, 'forms/not_found_survey.html')
+    questions = survey.questions.all().order_by('number')
 
     if survey.is_authentication_required and not request.user.is_authenticated:
         login_url = reverse('login')
@@ -96,7 +96,8 @@ def take_survey(request, unique_id):
 
     context = {
         'unique_id': unique_id,
-        'survey': survey
+        'survey': survey,
+        'questions': questions
     }
 
     return render(
