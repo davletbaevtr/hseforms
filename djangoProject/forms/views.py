@@ -56,7 +56,7 @@ def create(request):
                             choiceModel.number = cnt
                             choiceModel.save()
                             cnt += 1
-            return render(request, 'main/main.html')
+            return render(request, "forms/creation_completed.html", {"survey_title": form.title, 'unique_id': form.unique_id})
     return render(request, 'forms/edit_survey.html', {'survey_form': survey_form})
 
 
