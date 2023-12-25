@@ -157,7 +157,6 @@ main {
 
 .SelectButton {
     background-color: #0d40ff;
-    border-radius: 10px;
 }
 
 .Button {
@@ -267,4 +266,12 @@ main {
 
 .min-width-360 {
     min-width: 360px;
+}
+
+.border-radius-10 {
+    border-radius: 10px;
+}
+
+.background-white {
+    background: white;
 }

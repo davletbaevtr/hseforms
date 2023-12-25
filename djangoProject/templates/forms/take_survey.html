@@ -13,7 +13,7 @@
             <div class="d-flex justify-center font-size-big-big surveyTitle font-weight-500">
                 {{ survey.title }}
             </div>
-            <form class="formTheme margin-bottom-60" method="POST" action="{% url 'submit_response' unique_id %}" autocomplete="off">
+            <form class="formTheme margin-bottom-60 background-white" method="POST" action="{% url 'submit_response' unique_id %}" autocomplete="off">
                 {% csrf_token %}
                 <div class="margin-top-30 font-size-normal margin-left-40 font-weight-500 margin-right-40">
                     {{ survey.description|linebreaksbr }}

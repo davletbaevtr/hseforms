@@ -14,7 +14,7 @@
         {% if have_survey %}
             <div class="d-flex margin-60 wrap width-100">
                 {% for survey in surveys %}
-                    <a class="d-flex formTheme surveyTheme text-no-decoration margin-bottom-30 margin-left-40 margin-right-40 color-black font-size-normal font-weight-500"
+                    <a class="d-flex formTheme surveyTheme text-no-decoration margin-bottom-30 margin-left-40 margin-right-40 color-black font-size-normal font-weight-500 background-white"
                        href="{% url 'edit_survey' survey.unique_id %}">
                         <div class="margin-top-30 margin-bottom-30 margin-left-40 margin-right-40">
                             {{ survey.title }}<br>

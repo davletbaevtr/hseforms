@@ -34,7 +34,7 @@
 {% block section %}
     <div class="d-flex width-100 justify-center">
         <div class="d-flex flex-column mainTheme">
-            <div class="d-flex flex-column margin-top-60 formTheme">
+            <div class="d-flex flex-column margin-top-60 formTheme background-white">
                 <div class="d-flex flex-column">
                     <div class="d-flex margin-top-10 margin-left-40 font-size-big font-weight-500">
                         Спасибо!
@@ -45,13 +45,13 @@
                 </div>
                 <div class="d-flex margin-bottom-20 margin-top-20">
                     <a class="d-flex margin-left-40 background-blue border-radius-5 no-border color-white font-weight-500 button-text-padding font-size-small text-no-decoration"
-                       href="/forms/{{ unique_id }}">
+                       href="{% url 'take_survey' unique_id %}">
                         <img class="reloadIcon" src="{% static 'media/reload_icon.svg' %}"/>
                         Заполнить форму еще раз
                     </a>
                 </div>
             </div>
-            <div class="d-flex formTheme margin-top-30 justify-space-between">
+            <div class="d-flex formTheme margin-top-30 justify-space-between background-white">
                 <div class="font-weight-500 font-size-normal margin-left-40 margin-top-20 margin-bottom-20">
                     Поделиться формой
                 </div>
@@ -83,13 +83,13 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex margin-top-30 formTheme justify-space-between">
+            <div class="d-flex margin-top-30 formTheme justify-space-between background-white">
                 <div class="d-flex font-size-normal font-weight-500 margin-top-25 margin-left-40">
                     Создайте опрос за пару минут!
                 </div>
                 <div class="d-flex margin-bottom-20 margin-top-20 margin-right-40">
                     <a class="d-flex margin-left-40 background-blue border-radius-5 no-border color-white font-weight-500 button-text-padding font-size-normal text-no-decoration"
-                       href="/forms/create">
+                       href="{% url 'create' %}">
                         Создать опрос
                     </a>
                 </div>

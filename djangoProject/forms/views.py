@@ -13,11 +13,10 @@ from .models import Survey, UserSurvey, UserResponse, QuestionSurvey, ChoiceSurv
 def myforms(request):
     surveys = request.user.surveys.order_by('update_datetime').values('title', 'update_datetime', 'unique_id')
 
-    have_surveys = len(surveys) != 0
-    print(have_surveys)
+    have_survey = len(surveys) != 0
 
     context = {
-        'have_survey': have_surveys,
+        'have_survey': have_survey,
         'surveys': surveys,
     }
 
