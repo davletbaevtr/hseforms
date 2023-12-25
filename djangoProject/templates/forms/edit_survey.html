@@ -1,3 +1,4 @@
+
 {% extends 'layout.html' %}
 
 {% block title %}Редактирование формы{% endblock %}
@@ -19,9 +20,10 @@
                         <h2>Вопросы</h2>
                     </div>
                 </div>
-                <button type="button" id="addQuestionButton">Добавить новый вопрос</button>
+                <button type="button" id="deleteButton" style="margin-top: 10px;" class="DeleteButton">Удалить последний вопрос</button>
+                <button type="button" id="addQuestionButton", class="AddQuestionButton">Добавить новый вопрос</button>
 
-                <button style='margin-top: 10px;' type='submit' , class="SubmitButton">Submit</button>
+                <button style='margin-top: 10px;' type='submit' , class="SubmitButton">отправить</button>
 
             </div>
 
@@ -31,41 +33,52 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('quizForm');
-            const addQuestionButton = document.getElementById('addQuestionButton');
-            const questionsContainer = document.getElementById('questions');
+    const form = document.getElementById('quizForm');
+    const addQuestionButton = document.getElementById('addQuestionButton');
+    const questionsContainer = document.getElementById('questions');
+    const deleteLastQuestionButton = document.getElementById('deleteButton');
 
-            let questionCount = 0;
+    let questionCount = 0;
 
-            addQuestionButton.addEventListener('click', function () {
-                questionCount++;
+    addQuestionButton.addEventListener('click', function () {
+        questionCount++;
 
-                const newQuestionForm = document.createElement('div');
-                newQuestionForm.classList.add('question-form');
+        const newQuestionForm = document.createElement('div');
+        newQuestionForm.classList.add('question-form');
 
-                newQuestionForm.innerHTML = `
-                    <h3>Вопрос ${questionCount}</h3>
-                    <label>Название вопроса:</label>
-                    <input type="text" name="question_text_${questionCount}" required>
+        newQuestionForm.innerHTML = `
+            <h3>Вопрос ${questionCount}</h3>
+            <label>Название вопроса:</label>
+            <input type="text" name="question_text_${questionCount}" required>
 
-                    <label>Тип вопроса:</label>
-                    <select name="question_type_${questionCount}" required onchange="addAnswerOptions(this, ${questionCount})">
-                        <option value="">Выберите тип</option>
-                        <option value="text">text</option>
-                        <option value="single_choice">single choice</option>
-                        <option value="multi_choice">multiple choice</option>
-                    </select>
+            <label>Тип вопроса:</label>
+            <select name="question_type_${questionCount}" required onchange="addAnswerOptions(this, ${questionCount})">
+                <option value="">Выберите тип</option>
+                <option value="text">text</option>
+                <option value="single_choice">single choice</option>
+                <option value="multi_choice">multiple choice</option>
+            </select>
 
-                    <div id="answerOptions_${questionCount}" class="answer-options" style="display: none;">
-                        <label>Варианты ответа:</label>
-                        <div id="answerOptionsWrapper_${questionCount}"></div>
-                        <button type="button" onclick="addNewAnswerOption(${questionCount}, getAnswerInputType(${questionCount}))">Добавить вариант ответа</button>
-                    </div>
-                `;
+            <div id="answerOptions_${questionCount}" class="answer-options" style="display: none;">
+                <label>Варианты ответа:</label>
+                <div id="answerOptionsWrapper_${questionCount}"></div>
+                <button type="button" onclick="addNewAnswerOption(${questionCount}, getAnswerInputType(${questionCount}))">Добавить вариант ответа</button>
+            </div>
+        `;
 
-                questionsContainer.appendChild(newQuestionForm);
-            });
+        questionsContainer.appendChild(newQuestionForm);
+    });
+
+        deleteLastQuestionButton.addEventListener('click', function () {
+            console.log("hee")
+            if (questionCount > 0) {
+                const lastQuestionForm = document.querySelector('.question-form:last-child');
+                lastQuestionForm.parentNode.removeChild(lastQuestionForm);
+                questionCount--;
+            }
         });
+
+    });
 
         function addAnswerOptions(selectElement, questionCount) {
             const answerOptionsDiv = document.getElementById(`answerOptions_${questionCount}`);
