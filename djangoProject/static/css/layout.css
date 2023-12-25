@@ -224,6 +224,40 @@ main {
     cursor: pointer;
 }
 
+.DeleteButton {
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #dc1d39;
+    color: white;
+    padding: 4px 14px 8px 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.AddQuestionButton {
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #35b44e;
+    color: white;
+    padding: 4px 14px 8px 14px;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
 .nowrap {
     white-space: nowrap;
 }
